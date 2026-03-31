@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Joselyn</title>
+    <style>
+        /* Fondo oscuro para que resalte el neón */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #050505;
+            color: white;
+            font-family: 'sans-serif';
+            overflow: hidden; /* Evita que se mueva la pantalla */
+            touch-action: none; /* Optimizado para tacto en Acode */
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #ff4d6d;
+            text-shadow: 0 0 20px #ff4d6d;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #ffb3c1;
+            opacity: 0.8;
+        }
+
+        /* El corazón central */
+        .main-heart {
+            font-size: 80px;
+            animation: pulse 1.5s infinite;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        /* Estilo de los corazones que brotan */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            color: #ff4d6d;
+            font-size: 20px;
+            animation: fly 2s linear forwards;
+        }
+
+        @keyframes fly {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-200px) translateX(20px) scale(0); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Joselyn</h1>
+        <div class="main-heart">❤️</div>
+        <p>Toca la pantalla, mi amor</p>
+    </div>
+
+    <script>
+        // Función para crear corazones donde toque el dedo
+        document.addEventListener('touchstart', function(e) {
+            let x = e.touches[0].clientX;
+            let y = e.touches[0].clientY;
+            createHeart(x, y);
+        });
+
+        // También funciona con click por si lo ves en laptop
+        document.addEventListener('mousedown', function(e) {
+            createHeart(e.clientX, e.clientY);
+        });
+
+        function createHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.classList.add('particle');
+            
+            // Posición inicial
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            
+            // Tamaño aleatorio para que se vea real
+            let size = Math.random() * 20 + 10;
+            heart.style.fontSize = size + 'px';
+
+            document.body.appendChild(heart);
+
+            // Borrar el corazón después de la animación para que no de lag
+            setTimeout(() => {
+                heart.remove();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
